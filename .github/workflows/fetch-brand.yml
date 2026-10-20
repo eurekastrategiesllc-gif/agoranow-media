@@ -1,0 +1,20 @@
+name: fetch-brand
+on:
+  push:
+    paths: ['.github/workflows/fetch-brand.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          mkdir -p brand
+          curl -fsSL -o brand/reference_cover.png https://buffer-media-uploads.s3.amazonaws.com/6a77b4de2d73d2fb7545e313/6ad042c697089f0f6fb97ecf
+          curl -fsSL -o brand/reference_point.png https://buffer-media-uploads.s3.amazonaws.com/6a77b4de2d73d2fb7545e313/6ad042c61262a6205301cd65
+          curl -fsSL -o brand/reference_cta.png https://buffer-media-uploads.s3.amazonaws.com/6a77b4de2d73d2fb7545e313/6ad042c6ec12d2419201d2cd
+          git config user.name "AgoraNow Automation"
+          git config user.email "eurekastrategiesllc@gmail.com"
+          git add brand && git commit -m "Add brand reference slides" && git push
